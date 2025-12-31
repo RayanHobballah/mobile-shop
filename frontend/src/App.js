@@ -31,10 +31,9 @@ export default function App() {
       {!isAdminRoute && <Navbar />}
 
       <Routes>
-        {/* HOME FIRST */}
+        
         <Route path="/" element={<Home />} />
 
-        {/* PUBLIC */}
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />

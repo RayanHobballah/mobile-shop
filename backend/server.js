@@ -10,10 +10,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// serve uploaded images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// make sure uploads folder exists
 if (!fs.existsSync(path.join(__dirname, "uploads"))) {
   fs.mkdirSync(path.join(__dirname, "uploads"));
 }
@@ -30,17 +28,14 @@ db.connect((err) => {
   else console.log("MySQL Connected");
 });
 
-// multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// only this admin can add/delete admins
 const MAIN_ADMIN_USERNAME = "72330526@students.liu.edu.lb";
 
-/* ===================== AUTH ===================== */
 
 app.post("/api/auth/login", (req, res) => {
   const { username, password } = req.body;
@@ -95,7 +90,6 @@ app.post("/api/auth/signup", (req, res) => {
   });
 });
 
-/* ===================== USERS ===================== */
 
 app.get("/api/users", (req, res) => {
   db.query("SELECT * FROM users ORDER BY id DESC", (err, results) => {
@@ -111,7 +105,6 @@ app.delete("/api/users/:id", (req, res) => {
   });
 });
 
-/* ===================== ADMINS ===================== */
 
 app.get("/api/admins", (req, res) => {
   db.query("SELECT id, username FROM admins ORDER BY id DESC", (err, results) => {
@@ -169,7 +162,6 @@ app.delete("/api/admins/:id", (req, res) => {
   });
 });
 
-/* ===================== CATEGORIES + PRODUCTS ===================== */
 
 app.get("/api/categories", (req, res) => {
   db.query("SELECT * FROM categories ORDER BY id DESC", (err, categories) => {
@@ -237,7 +229,6 @@ app.delete("/api/products/:id", (req, res) => {
   });
 });
 
-/* ===================== ORDERS ===================== */
 
 app.get("/api/orders", (req, res) => {
   db.query("SELECT * FROM orders ORDER BY id DESC", (err, results) => {
@@ -269,7 +260,6 @@ app.delete("/api/orders/:id", (req, res) => {
   });
 });
 
-/* ===================== MESSAGES ===================== */
 
 app.get("/api/messages", (req, res) => {
   db.query("SELECT * FROM messages ORDER BY id DESC", (err, results) => {
@@ -295,7 +285,6 @@ app.delete("/api/messages/:id", (req, res) => {
   });
 });
 
-/* ===================== REPAIRS ===================== */
 
 app.get("/api/repairs", (req, res) => {
   db.query("SELECT * FROM repairs ORDER BY id DESC", (err, results) => {

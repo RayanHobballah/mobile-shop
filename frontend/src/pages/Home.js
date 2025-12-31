@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import homeBg from "../assets/home-bg.jpg"; // your image
+import homeBg from "../assets/home-bg.jpg";
 import "../App.css";
 
 export default function Home() {
